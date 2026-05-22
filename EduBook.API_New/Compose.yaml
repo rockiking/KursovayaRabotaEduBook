@@ -1,0 +1,34 @@
+﻿services:
+  # Наш веб-API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"  # Пробрасываем порт наружу
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      # Строка подключения к SQL Server внутри сети Docker
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=EduBookDB;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+
+  # База данных SQL Server
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"  # Принимаем лицензию
+      SA_PASSWORD: "YourStrong!Passw0rd" # Пароль для администратора
+      MSSQL_PID: "Express" # Используем бесплатную версию
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql  # Сохраняем данные базы на диске
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "YourStrong!Passw0rd" -Q "SELECT 1" || exit 1
+      interval: 10s
+      retries: 10
+
+volumes:
+  sql_data:

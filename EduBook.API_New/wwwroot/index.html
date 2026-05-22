@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduBook CRM</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <h1>📚 EduBook CRM</h1>
+            <p>Система управления онлайн-учебником</p>
+        </div>
+        <div style="text-align: right;">
+            <div id="userInfo" style="margin-bottom: 10px;">
+                <strong id="userName"></strong><br>
+                <span id="userRole" style="font-size: 14px; opacity: 0.9;"></span>
+            </div>
+            <button onclick="logout()" style="padding: 8px 20px; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; cursor: pointer; color: white; font-size: 14px;">
+                🚪 Выйти
+            </button>
+        </div>
+    </div>
+</header>
+
+       <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('users')">👥 Пользователи</button>
+    <button class="tab-btn" onclick="showTab('roles')">🎭 Роли</button>
+    <button class="tab-btn" onclick="showTab('authors')">✍️ Авторы</button>
+    <button class="tab-btn" onclick="showTab('materials')">📖 Материалы</button>
+    <button class="tab-btn" onclick="showTab('comments')">💬 Комментарии</button>
+</div>
+
+        <div id="users" class="tab-content active">
+            <div class="toolbar">
+                <h2>Пользователи</h2>
+            </div>
+            <div id="users-list" class="data-list"></div>
+        </div>
+
+        <div id="roles" class="tab-content">
+            <div class="toolbar">
+                <h2>Роли</h2>
+            </div>
+            <div id="roles-list" class="data-list"></div>
+        </div>
+
+        <div id="authors" class="tab-content">
+    <div class="toolbar">
+        <h2>Авторы</h2>
+        <button class="btn-add" id="becomeAuthorBtn" onclick="becomeAuthor()" style="display: none;">📝 Стать автором</button>
+    </div>
+    <div id="authors-list" class="data-list"></div>
+   <div id="materials" class="tab-content">
+    <div class="toolbar">
+        <h2>Учебные материалы</h2>
+        <div style="display: flex; gap: 10px;">
+            <input type="text" id="searchInput" placeholder="🔍 Поиск по дисциплине..." style="padding: 8px; border-radius: 5px; border: 1px solid #ddd; width: 200px;">
+            <button class="btn-add" onclick="searchByDiscipline()">🔍 Найти</button>
+            <button class="btn-add" onclick="loadMaterials()">🔄 Показать все</button>
+            <button class="btn-add" onclick="showAddMaterialForm()">+ Добавить материал</button>
+        </div>
+    </div>
+    <div id="materials-list" class="data-list"></div>
+</div>
+</div>
+
+        <div id="materials" class="tab-content">
+    <div class="toolbar">
+        <h2>Учебные материалы</h2>
+        <button class="btn-add" onclick="showAddMaterialForm()">+ Добавить материал</button>
+    </div>
+    <div id="materials-list" class="data-list"></div>
+</div>
+
+        <div id="comments" class="tab-content">
+            <div class="toolbar">
+                <h2>Комментарии</h2>
+            </div>
+            <div id="comments-list" class="data-list"></div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="window.closeModal()">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
